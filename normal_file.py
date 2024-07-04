@@ -1,11 +1,19 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 
 # Specify the path to geckodriver
 geckodriver_path = "/usr/local/bin/geckodriver"
 service = Service(executable_path=geckodriver_path)
-browser = webdriver.Firefox(service=service)
+
+# Configure Firefox options
+options = Options()
+options.add_argument("--headless")  # Run in headless mode
+options.add_argument("--disable-gpu")
+options.add_argument("--no-sandbox")
+
+# Initialize the Firefox browser with options
+browser = webdriver.Firefox(service=service, options=options)
 
 url = "https://www.threads.net/@7ssry"
 browser.get(url)
