@@ -1,8 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.service import Service
 
-# Set up the Firefox browser
-browser = webdriver.Firefox()
+# Specify the path to geckodriver
+geckodriver_path = "/usr/local/bin/geckodriver"
+service = Service(executable_path=geckodriver_path)
+browser = webdriver.Firefox(service=service)
 
 url = "https://www.threads.net/@7ssry"
 browser.get(url)
