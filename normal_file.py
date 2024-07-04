@@ -1,9 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
+import logging
+from selenium.webdriver.remote.remote_connection import LOGGER
+
+# Enable detailed logging
+LOGGER.setLevel(logging.DEBUG)
 
 # Specify the path to geckodriver
-geckodriver_path = "/usr/local/bin/geckodriver"
+geckodriver_path = "/path/to/geckodriver"
 service = Service(executable_path=geckodriver_path)
 
 # Configure Firefox options
@@ -11,6 +16,8 @@ options = Options()
 options.add_argument("--headless")  # Run in headless mode
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+options.add_argument("--remote-debugging-port=9222")  # Debugging port
 
 # Initialize the Firefox browser with options
 browser = webdriver.Firefox(service=service, options=options)
