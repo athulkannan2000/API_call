@@ -1,8 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
-# Set up the Chrome browser
-browser = webdriver.Chrome(executable_path='/usr/bin/chromedriver')
+# Set up the Chrome browser using webdriver_manager
+service = Service(ChromeDriverManager().install())
+browser = webdriver.Chrome(service=service)
 
 url = "https://www.threads.net/@7ssry"
 browser.get(url)
