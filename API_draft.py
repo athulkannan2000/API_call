@@ -28,6 +28,11 @@ def initialize_webdriver(chrome_driver_path, chrome_binary_path):
     options.add_argument('--headless')  # If you want to run Chrome in headless mode
     return webdriver.Chrome(service=service, options=options)
 
+def fetch_page_source(driver, url):
+    """Fetches the page source for the given URL using the provided WebDriver."""
+    driver.get(url)
+    return driver
+
 def find_target_script(driver, target_text, match_count):
     """Finds the content of the target script tag that matches the given criteria."""
     script_tags = driver.find_elements(By.TAG_NAME, 'script')
@@ -145,6 +150,7 @@ def scrape():
     url = request.args.get('url', default='https://www.threads.net/@google', type=str)
 
     driver = initialize_webdriver(chrome_driver_path, chrome_binary_path)
+    driver = fetch_page_source(driver, url)
     target_script_content = find_target_script(driver, "ScheduledServerJS", 5)
     driver.quit()
 
