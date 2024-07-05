@@ -140,6 +140,7 @@ def main():
     url = "https://www.threads.net/@google"
 
     driver = initialize_webdriver(chrome_driver_path, chrome_binary_path)
+    driver = fetch_page_source(driver, url)
     target_script_content = find_target_script(driver, "ScheduledServerJS", 5)
     driver.quit()
 
