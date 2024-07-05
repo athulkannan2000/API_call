@@ -32,6 +32,7 @@ def find_target_script(driver, target_text, match_count):
         if script_content and target_text in script_content:
             matched_script_count += 1
             if matched_script_count == match_count:
+                print("script_content: ", script_content)
                 return script_content
     return None
 
