@@ -19,7 +19,7 @@ def initialize_webdriver(chrome_driver_path, chrome_binary_path):
 def fetch_page_source(driver, url):
     """Fetches the page source for the given URL using the provided WebDriver."""
     driver.get(url)
-    return driver.page_source
+    return driver
 
 
 def find_target_script(driver, target_text, match_count):
