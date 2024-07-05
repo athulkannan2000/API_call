@@ -1,3 +1,4 @@
+import json
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -10,7 +11,7 @@ service = Service('/usr/local/bin/chromedriver')
 options = Options()
 options.binary_location = '/usr/bin/google-chrome'  # Path to Chrome binary
 options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
+# options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--headless')  # If you want to run Chrome in headless mode
 
 url = "https://www.threads.net/@google"
@@ -37,5 +38,8 @@ for script in script_tags:
             target_script_content = script_content
             break
 
-print(target_script_content)
+# print(target_script_content)
 driver.quit()
+
+data = json.loads(target_script_content)
+print(data)
