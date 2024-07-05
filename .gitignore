@@ -1,0 +1,7 @@
+# Ignore geckodriver.log
+geckodriver.log
+
+# Ignore google-chrome-stable_current_amd64.deb
+google-chrome-stable_current_amd64.deb
+
+.env
