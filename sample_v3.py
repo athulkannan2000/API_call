@@ -1,10 +1,29 @@
 import json
 import pandas as pd
+import datetime
+import pytz
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
+def datetime_format(timestamp):
+    
+    # Define UTC timezone
+    utc_timezone = pytz.utc
+
+    # Convert timestamp to datetime object in UTC
+    dt_utc = datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=utc_timezone)
+
+    # Define Kuwait timezone (GMT+3)
+    kuwait_timezone = pytz.timezone('Asia/Kuwait')
+    dt_kuwait = dt_utc.astimezone(kuwait_timezone)
+
+    # Format datetime object as ISO 8601 string
+    iso_format_kuwait = dt_kuwait.strftime('%Y-%m-%dT%H:%M:%S')
+
+    print(iso_format_kuwait)
+    return iso_format_kuwait
 
 def initialize_webdriver(chrome_driver_path, chrome_binary_path):
     """Initializes and returns a Chrome WebDriver instance."""
@@ -43,6 +62,7 @@ def func_1(post, url):
     image_url = post.get("image_versions2", {}).get("candidates", [])[0]['url'] if post.get("image_versions2", {}).get("candidates", []) else None
     video_url = post.get("video_versions", [])[0]['url'] if post.get("video_versions", []) else None
     taken_at = post["taken_at"]
+    taken_at = datetime_format(taken_at)
     return {
         "post_url": post_url,
         "plaintext": plaintext,
@@ -58,6 +78,7 @@ def func_2(post, url):
     plaintext = " ".join(plaintext_fragments)
     image_url = post["text_post_app_info"]["link_preview_attachment"]["image_url"] if post["text_post_app_info"].get("link_preview_attachment") else None
     taken_at = post["taken_at"]
+    taken_at = datetime_format(taken_at)
     return {
         "post_url": post_url,
         "plaintext": plaintext,
@@ -72,6 +93,7 @@ def func_3(post, url):
     plaintext_fragments = [fragment["plaintext"] for fragment in post.get("text_post_app_info", {}).get("text_fragments", {}).get("fragments", []) if "plaintext" in fragment]
     plaintext = " ".join(plaintext_fragments)
     taken_at = post.get("taken_at")
+    taken_at = datetime_format(taken_at)
     image_urls = []
     video_urls = []
     carousel_media = post.get("carousel_media")
@@ -98,6 +120,7 @@ def func_4(post, url):
     plaintext = " ".join(plaintext_fragments)
     image_url = post["image_versions2"]["candidates"][0]["url"] if post.get("image_versions2") else None
     taken_at = post["taken_at"]
+    taken_at = datetime_format(taken_at)
     return {
         "post_url": post_url,
         "plaintext": plaintext,
