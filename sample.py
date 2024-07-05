@@ -17,4 +17,23 @@ url = "https://www.threads.net/@google"
 driver = webdriver.Chrome(service=service, options=options)
 driver.get(url)
 print(driver.title)
+
+script_tags = driver.find_elements(By.TAG_NAME, 'script')
+matched_script_count = 0
+target_script_content = None
+
+# Iterate through all script tags
+for script in script_tags:
+    script_content = script.get_attribute('innerHTML')
+    
+    # Check if the script contains the text "ScheduledServerJS"
+    if script_content and "ScheduledServerJS" in script_content:
+        matched_script_count += 1
+        
+        # Check if this is the 5th matching script
+        if matched_script_count == 5:
+            target_script_content = script_content
+            break
+
+print(target_script_content)
 driver.quit()
