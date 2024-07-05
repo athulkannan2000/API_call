@@ -1,29 +1,37 @@
 import json
 import pandas as pd
 import datetime
-import pytz
+# import pytz
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 def datetime_format(timestamp):
+
+    dt_utc = datetime.datetime.utcfromtimestamp(timestamp)
+
+    # Format datetime object as ISO 8601 string in GMT format
+    iso_format_gmt = dt_utc.strftime('%Y-%m-%dT%H:%M:%S')
+
+    print(iso_format_gmt)
+    return iso_format_gmt
     
     # Define UTC timezone
-    utc_timezone = pytz.utc
+    # utc_timezone = pytz.utc
 
-    # Convert timestamp to datetime object in UTC
-    dt_utc = datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=utc_timezone)
+    # # Convert timestamp to datetime object in UTC
+    # dt_utc = datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=utc_timezone)
 
-    # Define Kuwait timezone (GMT+3)
-    kuwait_timezone = pytz.timezone('Asia/Kuwait')
-    dt_kuwait = dt_utc.astimezone(kuwait_timezone)
+    # # Define Kuwait timezone (GMT+3)
+    # kuwait_timezone = pytz.timezone('Asia/Kuwait')
+    # dt_kuwait = dt_utc.astimezone(kuwait_timezone)
 
-    # Format datetime object as ISO 8601 string
-    iso_format_kuwait = dt_kuwait.strftime('%Y-%m-%dT%H:%M:%S')
+    # # Format datetime object as ISO 8601 string
+    # iso_format_kuwait = dt_kuwait.strftime('%Y-%m-%dT%H:%M:%S')
 
-    print(iso_format_kuwait)
-    return iso_format_kuwait
+    # print(iso_format_kuwait)
+    # return iso_format_kuwait
 
 def initialize_webdriver(chrome_driver_path, chrome_binary_path):
     """Initializes and returns a Chrome WebDriver instance."""
